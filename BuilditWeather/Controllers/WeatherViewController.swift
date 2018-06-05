@@ -41,6 +41,7 @@ class WeatherViewController: UIViewController {
     var collectionViewDailyForecast:UICollectionView!
     var tableViewFutureDays:UITableView!
 
+    let dateFormatter = DateFormatter()
     
     
     
@@ -54,7 +55,8 @@ class WeatherViewController: UIViewController {
         viewModel.forecast { [weak self] in
             self?._setViewComponents()
             self?._setViewConstraints()
-            
+            print(self?.viewModel.weather.city)
+            self?.dateFormatter.dateFormat = "ha"
             for forecast in (self?.viewModel.weather.forecast)! {
                 print(forecast)
                 print("============")
@@ -64,6 +66,7 @@ class WeatherViewController: UIViewController {
     
     private func _setViewComponents(){
         scrolView = UIScrollView()
+        scrolView.showsHorizontalScrollIndicator = false
         viewContent = UIView()
         
         labelCityName = UILabel()
@@ -108,7 +111,11 @@ class WeatherViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 56, height: 56)
         collectionViewDailyForecast = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
-        
+        collectionViewDailyForecast.register(TodayCollectionViewCell.self, forCellWithReuseIdentifier: viewModel.cellIdentifier)
+        collectionViewDailyForecast.backgroundColor = UIColor.white
+        collectionViewDailyForecast.delegate = self
+        collectionViewDailyForecast.dataSource = self
+        collectionViewDailyForecast.showsHorizontalScrollIndicator = false
         viewSeparator2 = UIView()
         viewSeparator2.backgroundColor = UIColor.groupTableViewBackground
         
@@ -116,6 +123,9 @@ class WeatherViewController: UIViewController {
         tableViewFutureDays.isScrollEnabled = false
         tableViewFutureDays.estimatedRowHeight = 50
         tableViewFutureDays.rowHeight = 50
+        tableViewFutureDays.register(HourlyForecastTableViewCell.self, forCellReuseIdentifier: viewModel.cellIdentifier)
+        tableViewFutureDays.delegate = self
+        tableViewFutureDays.dataSource = self
         
         viewContent.addSubview(labelCityName)
         viewContent.addSubview(labelDescription)
@@ -159,7 +169,7 @@ class WeatherViewController: UIViewController {
         labelDescription.centerXAnchor.constraint(equalTo: viewContent.centerXAnchor).isActive = true
         
         labelTemperature.translatesAutoresizingMaskIntoConstraints = false
-        labelTemperature.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 24).isActive = true
+        labelTemperature.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 8).isActive = true
         labelTemperature.centerXAnchor.constraint(equalTo: viewContent.centerXAnchor).isActive = true
         
         
@@ -199,6 +209,44 @@ class WeatherViewController: UIViewController {
         tableViewFutureDays.topAnchor.constraint(equalTo: viewSeparator2.bottomAnchor, constant: 8).isActive = true
         tableViewFutureDays.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: 0).isActive = true
         
+    }
+}
+
+
+extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 15
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionViewDailyForecast.dequeueReusableCell(withReuseIdentifier: viewModel.cellIdentifier, for: indexPath) as! TodayCollectionViewCell
+        let forecast = viewModel.weather.forecast[indexPath.row]
+        
+        
+        cell.labelHour.text = dateFormatter.string(from: forecast.dateTime)
+        cell.labelTemperature.text = "\(Int(forecast.temperature))°"
+        
+        return cell
+    }
+    
+    
+}
+
+extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.weather.forecast.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableViewFutureDays.dequeueReusableCell(withIdentifier: viewModel.cellIdentifier, for: indexPath) as! HourlyForecastTableViewCell
+        let forecast = viewModel.weather.forecast[indexPath.row]
+        
+        
+        
+        cell.labelHour.text = dateFormatter.string(from: forecast.dateTime)
+        cell.labelDescription.text = "light rain"
+        cell.labelTemperature.text = "\(Int(forecast.temperature))°"
+        return cell
     }
     
 }

@@ -9,6 +9,8 @@
 import Foundation
 class WeatherViewModel {
     let title = "Weather"
+    let cellIdentifier = "Hourly Cell"
+//    let collectionViewidentifier = "HourlyCell"
     
     var weather: Weather!
     
