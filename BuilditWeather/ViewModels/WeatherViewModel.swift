@@ -95,7 +95,6 @@ class WeatherViewModel {
     
     func fetchWeatherImage(imageString:String, completion:@escaping(_ data: Data)->()){
         let urlString = "http://openweathermap.org/img/w/\(imageString).png"
-        print(urlString)
         let url = URL(string: urlString)
         let urlRequest = URLRequest(url: url!)
         APIClient.fetch(request: urlRequest) { (data) in

@@ -30,8 +30,8 @@ class TodayCollectionViewCell: UICollectionViewCell {
         labelHour.textColor = UIColor.black
         
         imageViewWeather = UIImageView()
-        imageViewWeather.contentMode = .scaleAspectFit
-        imageViewWeather.backgroundColor = UIColor.groupTableViewBackground
+        imageViewWeather.contentMode = .scaleAspectFill
+        imageViewWeather.backgroundColor = UIColor.clear
         
         labelTemperature = UILabel()
         labelTemperature.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
@@ -40,7 +40,6 @@ class TodayCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(labelHour)
         contentView.addSubview(imageViewWeather)
         contentView.addSubview(labelTemperature)
-        
         
     }
     private func _setViewConstraints(){
@@ -52,7 +51,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
         imageViewWeather.centerXAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 0).isActive = true
         imageViewWeather.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
         imageViewWeather.widthAnchor.constraint(equalToConstant: 56).isActive = true
-        imageViewWeather.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        imageViewWeather.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         labelTemperature.translatesAutoresizingMaskIntoConstraints = false
         labelTemperature.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true

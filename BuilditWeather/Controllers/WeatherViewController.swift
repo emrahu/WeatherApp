@@ -58,10 +58,10 @@ class WeatherViewController: UIViewController {
             
             
             self?.dateFormatter.dateFormat = "ha"
-            for forecast in (self?.viewModel.weather.forecast)! {
-                print(forecast)
-                print("============")
-            }
+//            for forecast in (self?.viewModel.weather.forecast)! {
+//                print(forecast)
+//                print("============")
+//            }
             self?.activityIndicatorView.stopAnimating()
         }
     }
@@ -79,18 +79,20 @@ class WeatherViewController: UIViewController {
         labelCityName.text = viewModel.weather.city.name
         labelCityName.font = UIFont.systemFont(ofSize: 42, weight: UIFont.Weight.light)
         labelCityName.textColor = UIColor.black
+        labelCityName.textAlignment = .center
         
         labelDescription = UILabel()
         labelDescription.text = viewModel.weather.forecast.first!.weather.first!.description.capitalized
-        
         labelDescription.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.light)
         labelDescription.textColor = UIColor.black
+        labelDescription.textAlignment = .center
         
         
         labelTemperature = UILabel()
         labelTemperature.text = "\(Int(viewModel.weather.forecast.first!.temperature))°F"
         labelTemperature.font = UIFont.systemFont(ofSize: 100, weight: UIFont.Weight.light)
         labelTemperature.textColor = UIColor.black
+        labelTemperature.textAlignment = .center
         
         labelDay = UILabel()
         let formatter = DateFormatter()
@@ -110,6 +112,7 @@ class WeatherViewController: UIViewController {
         labelTemperatureLowest.text = "\(Int(viewModel.weather.forecast.first!.tempMin))"
         labelTemperatureLowest.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.light)
         labelTemperatureLowest.textColor = UIColor.darkGray
+        labelTemperatureHighest.textAlignment = .right
         
         viewSeparator1 = UIView()
         viewSeparator1.backgroundColor = UIColor.groupTableViewBackground
@@ -139,21 +142,31 @@ class WeatherViewController: UIViewController {
         tableViewFutureDays.delegate = self
         tableViewFutureDays.dataSource = self
         
-        viewContent.addSubview(labelCityName)
-        viewContent.addSubview(labelDescription)
-        viewContent.addSubview(labelTemperature)
-        viewContent.addSubview(labelDay)
-        viewContent.addSubview(labelTemperatureHighest)
-        viewContent.addSubview(labelTemperatureLowest)
-        viewContent.addSubview(viewSeparator1)
-        viewContent.addSubview(collectionViewDailyForecast)
-        viewContent.addSubview(viewSeparator2)
-        viewContent.addSubview(tableViewFutureDays)
+//        viewContent.addSubview(labelCityName)
+//        viewContent.addSubview(labelDescription)
+//        viewContent.addSubview(labelTemperature)
+//        viewContent.addSubview(labelDay)
+//        viewContent.addSubview(labelTemperatureHighest)
+//        viewContent.addSubview(labelTemperatureLowest)
+//        viewContent.addSubview(viewSeparator1)
+//        viewContent.addSubview(collectionViewDailyForecast)
+//        viewContent.addSubview(viewSeparator2)
+//        viewContent.addSubview(tableViewFutureDays)
+        
+        scrolView.addSubview(labelCityName)
+        scrolView.addSubview(labelDescription)
+        scrolView.addSubview(labelTemperature)
+        scrolView.addSubview(labelDay)
+        scrolView.addSubview(labelTemperatureHighest)
+        scrolView.addSubview(labelTemperatureLowest)
+        scrolView.addSubview(viewSeparator1)
+        scrolView.addSubview(collectionViewDailyForecast)
+        scrolView.addSubview(viewSeparator2)
+        scrolView.addSubview(tableViewFutureDays)
         
         
         
-        
-        scrolView.addSubview(viewContent)
+//        scrolView.addSubview(viewContent)
         view.addSubview(scrolView)
         
     }
@@ -161,67 +174,80 @@ class WeatherViewController: UIViewController {
     private func _setViewConstraints(){
         scrolView.translatesAutoresizingMaskIntoConstraints = false
         scrolView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
-        scrolView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+//        scrolView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
         scrolView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        scrolView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+//        scrolView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        scrolView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        scrolView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         
-        viewContent.translatesAutoresizingMaskIntoConstraints = false
-        viewContent.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 0).isActive = true
-        viewContent.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: 0).isActive = true
-        viewContent.topAnchor.constraint(equalTo: scrolView.topAnchor, constant: 0).isActive = true
-        viewContent.bottomAnchor.constraint(equalTo: scrolView.bottomAnchor, constant: 0).isActive = true
-        viewContent.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        viewContent.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//        viewContent.translatesAutoresizingMaskIntoConstraints = false
+//        viewContent.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 0).isActive = true
+//        viewContent.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: 0).isActive = true
+//        viewContent.topAnchor.constraint(equalTo: scrolView.topAnchor, constant: 0).isActive = true
+//        viewContent.bottomAnchor.constraint(equalTo: scrolView.bottomAnchor, constant: 0).isActive = true
+//        viewContent.heightAnchor.constraint(equalToConstant: 2200).isActive = true
+//        viewContent.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
         labelCityName.translatesAutoresizingMaskIntoConstraints = false
-        labelCityName.topAnchor.constraint(equalTo: viewContent.topAnchor, constant: 16).isActive = true
-        labelCityName.centerXAnchor.constraint(equalTo: viewContent.centerXAnchor).isActive = true
+        labelCityName.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 16).isActive = true
+        labelCityName.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: -16).isActive = true
+        labelCityName.topAnchor.constraint(equalTo: scrolView.topAnchor, constant: 16).isActive = true
+        
         
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
+        labelDescription.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 16).isActive = true
+        labelDescription.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: -16).isActive = true
         labelDescription.topAnchor.constraint(equalTo: labelCityName.bottomAnchor, constant: 8).isActive = true
-        labelDescription.centerXAnchor.constraint(equalTo: viewContent.centerXAnchor).isActive = true
+        
         
         labelTemperature.translatesAutoresizingMaskIntoConstraints = false
         labelTemperature.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 8).isActive = true
-        labelTemperature.centerXAnchor.constraint(equalTo: viewContent.centerXAnchor).isActive = true
+        labelTemperature.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 16).isActive = true
+        labelTemperature.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: -16).isActive = true
         
         
         labelDay.translatesAutoresizingMaskIntoConstraints = false
-        labelDay.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 16).isActive = true
+        labelDay.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 16).isActive = true
+        labelDay.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: -16).isActive = true
         labelDay.topAnchor.constraint(equalTo: labelTemperature.bottomAnchor, constant: 16).isActive = true
         
         labelTemperatureLowest.translatesAutoresizingMaskIntoConstraints = false
-        labelTemperatureLowest.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: -16).isActive = true
+        labelTemperatureLowest.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: -16).isActive = true
         labelTemperatureLowest.topAnchor.constraint(equalTo: labelTemperature.bottomAnchor, constant: 16).isActive = true
         
         labelTemperatureHighest.translatesAutoresizingMaskIntoConstraints = false
         labelTemperatureHighest.trailingAnchor.constraint(equalTo: labelTemperatureLowest.leadingAnchor, constant: -16).isActive = true
-        labelTemperatureHighest.centerYAnchor.constraint(equalTo: labelTemperatureLowest.centerYAnchor, constant: 0).isActive = true
+//        labelTemperatureHighest.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 16).isActive = true
+        labelTemperatureHighest.topAnchor.constraint(equalTo: labelTemperature.bottomAnchor, constant: 16).isActive = true
+
         
         viewSeparator1.translatesAutoresizingMaskIntoConstraints = false
-        viewSeparator1.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 0).isActive = true
-        viewSeparator1.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: 0).isActive = true
+        viewSeparator1.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 0).isActive = true
+        viewSeparator1.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: 0).isActive = true
         viewSeparator1.topAnchor.constraint(equalTo: labelDay.bottomAnchor, constant: 8).isActive = true
         viewSeparator1.heightAnchor.constraint(equalToConstant:1).isActive = true
         
         collectionViewDailyForecast.translatesAutoresizingMaskIntoConstraints = false
-        collectionViewDailyForecast.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 0).isActive = true
-        collectionViewDailyForecast.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: 0).isActive = true
+        collectionViewDailyForecast.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 0).isActive = true
+        collectionViewDailyForecast.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: 0).isActive = true
         collectionViewDailyForecast.topAnchor.constraint(equalTo: viewSeparator1.bottomAnchor, constant: 16).isActive = true
+        collectionViewDailyForecast.widthAnchor.constraint(equalTo: scrolView.widthAnchor, constant:0).isActive = true
         collectionViewDailyForecast.heightAnchor.constraint(equalToConstant:86).isActive = true
         
         viewSeparator2.translatesAutoresizingMaskIntoConstraints = false
-        viewSeparator2.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 0).isActive = true
-        viewSeparator2.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: 0).isActive = true
+        viewSeparator2.leadingAnchor.constraint(equalTo: scrolView.leadingAnchor, constant: 0).isActive = true
+        viewSeparator2.trailingAnchor.constraint(equalTo: scrolView.trailingAnchor, constant: 0).isActive = true
         viewSeparator2.topAnchor.constraint(equalTo: collectionViewDailyForecast.bottomAnchor, constant: 8).isActive = true
         viewSeparator2.heightAnchor.constraint(equalToConstant:1).isActive = true
         
         tableViewFutureDays.translatesAutoresizingMaskIntoConstraints = false
-        tableViewFutureDays.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 0).isActive = true
-        tableViewFutureDays.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: 0).isActive = true
+        tableViewFutureDays.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
+        tableViewFutureDays.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
         tableViewFutureDays.topAnchor.constraint(equalTo: viewSeparator2.bottomAnchor, constant: 8).isActive = true
-        tableViewFutureDays.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: 0).isActive = true
-        constraintTableViewheight = tableViewFutureDays.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+        tableViewFutureDays.bottomAnchor.constraint(equalTo: scrolView.bottomAnchor, constant: 0).isActive = true
+        tableViewFutureDays.widthAnchor.constraint(equalTo: scrolView.widthAnchor, constant:0).isActive = true
+        constraintTableViewheight = tableViewFutureDays.heightAnchor.constraint(greaterThanOrEqualToConstant: 2000)
+        constraintTableViewheight.isActive = true
         
         
     }
@@ -238,9 +264,15 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
         let cell = collectionViewDailyForecast.dequeueReusableCell(withReuseIdentifier: viewModel.cellIdentifier, for: indexPath) as! TodayCollectionViewCell
         let forecast = viewModel.weather.forecast[indexPath.row]
         
-        
         cell.labelHour.text = dateFormatter.string(from: forecast.dateTime)
         cell.labelTemperature.text = "\(Int(forecast.temperature))°"
+        guard let stringIcon = forecast.weather.first?.icon else {return UICollectionViewCell()}
+        viewModel.fetchWeatherImage(imageString: stringIcon) { (imageData) in
+            DispatchQueue.main.async {
+                let image = UIImage(data: imageData)
+                cell.imageViewWeather.image = image!
+            }
+        }
         
         return cell
     }

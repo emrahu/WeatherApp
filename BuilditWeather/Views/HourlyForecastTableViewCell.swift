@@ -16,11 +16,13 @@ class HourlyForecastTableViewCell: UITableViewCell {
     var labelDescription:UILabel!
     var labelDetails:UILabel!
     
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         _setViewComponents()
         _setViewConstraints()
-        
+    
+        selectionStyle = .none
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("Can't initialize from coder")
@@ -64,10 +66,10 @@ class HourlyForecastTableViewCell: UITableViewCell {
         labelHour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
         
         imageViewWeather.translatesAutoresizingMaskIntoConstraints = false
-        imageViewWeather.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 70).isActive = true
+        imageViewWeather.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 50).isActive = true
         imageViewWeather.centerYAnchor.constraint(equalTo: labelHour.centerYAnchor, constant: 0).isActive = true
-        imageViewWeather.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        imageViewWeather.widthAnchor.constraint(equalToConstant: 46).isActive = true
+        imageViewWeather.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        imageViewWeather.widthAnchor.constraint(equalToConstant: 80).isActive = true
         
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
         labelDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
