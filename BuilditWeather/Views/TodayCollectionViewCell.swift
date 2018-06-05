@@ -16,7 +16,6 @@ class TodayCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        
         _setViewComponents()
         _setViewConstraints()
         
@@ -32,6 +31,7 @@ class TodayCollectionViewCell: UICollectionViewCell {
         
         imageViewWeather = UIImageView()
         imageViewWeather.contentMode = .scaleAspectFit
+        imageViewWeather.backgroundColor = UIColor.groupTableViewBackground
         
         labelTemperature = UILabel()
         labelTemperature.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)

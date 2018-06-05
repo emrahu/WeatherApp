@@ -10,8 +10,8 @@ import Foundation
 class APIClient {
     let baseUrl = "https://api.openweathermap.org"
     let weatherApi = "/data/2.5/forecast"
-    let city = "Bitlis"
-    let isoCode = "TR"
+    let city = "New+York"
+    let isoCode = "US"
     let apiKey = "c061e2384cb63a49e9fe98b958012246"
     
     private static let defaultSession = URLSession(configuration: URLSessionConfiguration.default)

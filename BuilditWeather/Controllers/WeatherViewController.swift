@@ -32,17 +32,17 @@ class WeatherViewController: UIViewController {
     var labelPressure:UILabel!
     var labelPressureSeaLevel:UILabel!
     var labelPressureGroundLevel:UILabel!
-
     var viewSeparator1:UIView!
     var viewSeparator2:UIView!
-    
     var imageViewWeather:UIImageView!
-    
     var collectionViewDailyForecast:UICollectionView!
     var tableViewFutureDays:UITableView!
+    var constraintTableViewheight:NSLayoutConstraint!
+    
+    
 
     let dateFormatter = DateFormatter()
-    
+    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     
     
     override func loadView() {
@@ -51,22 +51,28 @@ class WeatherViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         
         viewModel = WeatherViewModel()
-        
+        self.activityIndicatorView.startAnimating()
         viewModel.forecast { [weak self] in
             self?._setViewComponents()
             self?._setViewConstraints()
-            print(self?.viewModel.weather.city)
+            
+            
             self?.dateFormatter.dateFormat = "ha"
             for forecast in (self?.viewModel.weather.forecast)! {
                 print(forecast)
                 print("============")
             }
+            self?.activityIndicatorView.stopAnimating()
         }
     }
     
     private func _setViewComponents(){
+        
+        
         scrolView = UIScrollView()
         scrolView.showsHorizontalScrollIndicator = false
+        
+        
         viewContent = UIView()
         
         labelCityName = UILabel()
@@ -75,7 +81,8 @@ class WeatherViewController: UIViewController {
         labelCityName.textColor = UIColor.black
         
         labelDescription = UILabel()
-        labelDescription.text = "light rain".capitalized
+        labelDescription.text = viewModel.weather.forecast.first!.weather.first!.description.capitalized
+        
         labelDescription.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.light)
         labelDescription.textColor = UIColor.black
         
@@ -109,7 +116,7 @@ class WeatherViewController: UIViewController {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 56, height: 56)
+        layout.itemSize = CGSize(width: 56, height: 86)
         collectionViewDailyForecast = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
         collectionViewDailyForecast.register(TodayCollectionViewCell.self, forCellWithReuseIdentifier: viewModel.cellIdentifier)
         collectionViewDailyForecast.backgroundColor = UIColor.white
@@ -121,8 +128,13 @@ class WeatherViewController: UIViewController {
         
         tableViewFutureDays = UITableView(frame: CGRect(), style: UITableViewStyle.plain)
         tableViewFutureDays.isScrollEnabled = false
-        tableViewFutureDays.estimatedRowHeight = 50
-        tableViewFutureDays.rowHeight = 50
+        tableViewFutureDays.estimatedRowHeight = 150
+        tableViewFutureDays.rowHeight = UITableViewAutomaticDimension
+        tableViewFutureDays.frame = CGRect(x: tableViewFutureDays.frame.origin.x,
+                                           y: tableViewFutureDays.frame.origin.y,
+                                           width: tableViewFutureDays.frame.size.width,
+                                           height: tableViewFutureDays.frame.size.height+(40 * tableViewFutureDays.rowHeight))
+        
         tableViewFutureDays.register(HourlyForecastTableViewCell.self, forCellReuseIdentifier: viewModel.cellIdentifier)
         tableViewFutureDays.delegate = self
         tableViewFutureDays.dataSource = self
@@ -143,6 +155,7 @@ class WeatherViewController: UIViewController {
         
         scrolView.addSubview(viewContent)
         view.addSubview(scrolView)
+        
     }
     
     private func _setViewConstraints(){
@@ -186,36 +199,39 @@ class WeatherViewController: UIViewController {
         labelTemperatureHighest.centerYAnchor.constraint(equalTo: labelTemperatureLowest.centerYAnchor, constant: 0).isActive = true
         
         viewSeparator1.translatesAutoresizingMaskIntoConstraints = false
-        viewSeparator1.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 16).isActive = true
-        viewSeparator1.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: -16).isActive = true
+        viewSeparator1.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 0).isActive = true
+        viewSeparator1.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: 0).isActive = true
         viewSeparator1.topAnchor.constraint(equalTo: labelDay.bottomAnchor, constant: 8).isActive = true
         viewSeparator1.heightAnchor.constraint(equalToConstant:1).isActive = true
         
         collectionViewDailyForecast.translatesAutoresizingMaskIntoConstraints = false
-        collectionViewDailyForecast.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 16).isActive = true
-        collectionViewDailyForecast.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: -16).isActive = true
+        collectionViewDailyForecast.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 0).isActive = true
+        collectionViewDailyForecast.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: 0).isActive = true
         collectionViewDailyForecast.topAnchor.constraint(equalTo: viewSeparator1.bottomAnchor, constant: 16).isActive = true
-        collectionViewDailyForecast.heightAnchor.constraint(equalToConstant:56).isActive = true
+        collectionViewDailyForecast.heightAnchor.constraint(equalToConstant:86).isActive = true
         
         viewSeparator2.translatesAutoresizingMaskIntoConstraints = false
-        viewSeparator2.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 16).isActive = true
-        viewSeparator2.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: -16).isActive = true
+        viewSeparator2.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 0).isActive = true
+        viewSeparator2.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: 0).isActive = true
         viewSeparator2.topAnchor.constraint(equalTo: collectionViewDailyForecast.bottomAnchor, constant: 8).isActive = true
         viewSeparator2.heightAnchor.constraint(equalToConstant:1).isActive = true
         
         tableViewFutureDays.translatesAutoresizingMaskIntoConstraints = false
-        tableViewFutureDays.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 16).isActive = true
-        tableViewFutureDays.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: -16).isActive = true
+        tableViewFutureDays.leadingAnchor.constraint(equalTo: viewContent.leadingAnchor, constant: 0).isActive = true
+        tableViewFutureDays.trailingAnchor.constraint(equalTo: viewContent.trailingAnchor, constant: 0).isActive = true
         tableViewFutureDays.topAnchor.constraint(equalTo: viewSeparator2.bottomAnchor, constant: 8).isActive = true
         tableViewFutureDays.bottomAnchor.constraint(equalTo: viewContent.bottomAnchor, constant: 0).isActive = true
+        constraintTableViewheight = tableViewFutureDays.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+        
         
     }
+    
 }
 
 
 extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -233,6 +249,14 @@ extension WeatherViewController: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "\(viewModel.weather.forecast.first!.dateTime)"
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.weather.forecast.count
     }
@@ -244,10 +268,32 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
         
         
         cell.labelHour.text = dateFormatter.string(from: forecast.dateTime)
-        cell.labelDescription.text = "light rain"
+        cell.labelDescription.text =  forecast.weather.first!.description
         cell.labelTemperature.text = "\(Int(forecast.temperature))°"
+        
+        guard let stringIcon = forecast.weather.first?.icon else {return UITableViewCell()}
+        viewModel.fetchWeatherImage(imageString: stringIcon) { (imageData) in
+            DispatchQueue.main.async {
+                let image = UIImage(data: imageData)
+                cell.imageViewWeather.image = image!
+            }
+        }
+        
+        let details = "Pressure: \(forecast.pressure)hpa, Humidity: \(forecast.humidity)%, Wind: \(forecast.wind.speed)m/s"
+        cell.labelDetails.text = details
+        
         return cell
     }
     
 }
-
+extension UIScrollView {
+    func resizeSroll(){
+        print("Called")
+        var contentRect = CGRect.zero
+        for view in self.subviews {
+            print("View \(view)")
+            contentRect = contentRect.union(view.frame)
+        }
+        self.contentSize = contentRect.size
+    }
+}
