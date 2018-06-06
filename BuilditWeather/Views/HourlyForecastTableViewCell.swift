@@ -66,7 +66,7 @@ class HourlyForecastTableViewCell: UITableViewCell {
         labelHour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
         
         imageViewWeather.translatesAutoresizingMaskIntoConstraints = false
-        imageViewWeather.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 50).isActive = true
+        imageViewWeather.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90).isActive = true
         imageViewWeather.centerYAnchor.constraint(equalTo: labelHour.centerYAnchor, constant: 0).isActive = true
         imageViewWeather.heightAnchor.constraint(equalToConstant: 50).isActive = true
         imageViewWeather.widthAnchor.constraint(equalToConstant: 80).isActive = true

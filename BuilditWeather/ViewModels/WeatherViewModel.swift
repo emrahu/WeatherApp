@@ -11,62 +11,26 @@ import Foundation
 class WeatherViewModel {
     let title = "Weather"
     let cellIdentifier = "Hourly Cell"
-//    let collectionViewidentifier = "HourlyCell"
+    let apiClient = APIClient()
     
     var weather: Weather!
     
-     func forecast(completion:@escaping()->()){
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?q=New+York,US&units=imperial&appid=c061e2384cb63a49e9fe98b958012246")
+    func forecast(completion:@escaping(_ success:Bool,_ error:String?)->()){
         
-        let request = URLRequest(url: url!)
-        APIClient.fetch(request: request) { (data) in
-            
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
-                
-                let container = try decoder.singleValueContainer()
-                let dateString = try container.decode(String.self)
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                formatter.locale = Locale(identifier: "en_US_POSIX")
-                formatter.timeZone = TimeZone(secondsFromGMT: 0)
-                if let date = formatter.date(from: dateString) {
-                    return date
-                }
-                
-                throw DateError.invalidDate
-            })
-            do {
-                
-                let weather = try decoder.decode(Weather.self, from: data)
-                
-                
-                _ = weather.forecast.sorted(by: {
-                    $0.dateTime.compare($1.dateTime) == .orderedDescending
-                })
-                
-                
-                self.weather = weather
-                self.orderForecast()
-                completion()
-                
-            } catch DecodingError.keyNotFound(let key, let context){
-                print("Key not found")
-            print(key, context)
-            } catch DecodingError.typeMismatch(let type, let context){
-                print("Type mismatch")
-                print(type, context)
-            } catch DecodingError.valueNotFound(let type, let context){
-                print("Value not found")
-                print(type, context)
+        guard let request = APIClient.apiURL() else {return}
+        
+        APIClient.fetch(request: request) { (result) in
+            switch result {
+            case .success(let payload, let result):
+                guard let payload = payload else{ return }
+                self.weather = payload
+                completion(result, nil)
+            case .failure(let failure):
+                completion(false,failure!)
             }
-            catch (let error){
-                print("Error: \(error.localizedDescription)")
-                print(error)
-            }
-            
         }
     }
+    
     func orderForecast(){
         for forecast in self.weather.forecast {
             let dateFormatter = DateFormatter()
@@ -90,14 +54,13 @@ class WeatherViewModel {
 //            if forecastDate == forecast.dateTime
             
         }
-        
     }
     
     func fetchWeatherImage(imageString:String, completion:@escaping(_ data: Data)->()){
         let urlString = "http://openweathermap.org/img/w/\(imageString).png"
         let url = URL(string: urlString)
         let urlRequest = URLRequest(url: url!)
-        APIClient.fetch(request: urlRequest) { (data) in
+        APIClient.fetchIcon(request: urlRequest) { (data) in
             completion(data)
         }
     }
