@@ -43,7 +43,6 @@ class WeatherViewModel {
                         tempDay = currentDay
                     }
                 }
-
                 completion(result, nil)
                 
             case .failure(let failure):
@@ -52,30 +51,7 @@ class WeatherViewModel {
         }
     }
     
-    func orderForecast(){
-        for forecast in self.weather.forecast {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
-            //let forecastDate = dateFormatter.string(from: forecast.dateTime)
-            
-            let currentDate:Date = forecast.dateTime
-            var tempDate:Date = Date()
-            
-            if currentDate == tempDate {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "ha"
-//                let hourlyForcast = [currentDate: HourlyForecast]
-                
-//                var fc = FC(date: currentDate, hourlyForecast: [Date(): HourlyForecast(forecast: forecast)])
-//                print(fc)
-//                print("============")
-                tempDate = currentDate
-            }
-            
-//            if forecastDate == forecast.dateTime
-            
-        }
-    }
+
     
     func fetchWeatherImage(imageString:String, completion:@escaping(_ data: Data)->()){
         let urlString = "http://openweathermap.org/img/w/\(imageString).png"

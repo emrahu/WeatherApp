@@ -7,7 +7,7 @@
 //
 
 import Foundation
-struct Wind:Decodable {
+struct Wind:Codable {
     var speed:Float
     var degree:Float
     
@@ -15,9 +15,5 @@ struct Wind:Decodable {
         case speed
         case degree = "deg"
     }
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        speed = try values.decode(Float.self, forKey: Wind.CodingKeys.speed)
-        degree = try values.decode(Float.self, forKey: Wind.CodingKeys.degree)
-    }
+
 }

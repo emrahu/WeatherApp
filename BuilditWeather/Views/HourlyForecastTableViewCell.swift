@@ -10,7 +10,7 @@ import UIKit
 
 class HourlyForecastTableViewCell: UITableViewCell {
 
-    var labelHour:UILabel!
+    var labelDay:UILabel!
     var imageViewWeather:UIImageView!
     var labelTemperature:UILabel!
     var labelDescription:UILabel!
@@ -29,13 +29,18 @@ class HourlyForecastTableViewCell: UITableViewCell {
     }
     
     private func _setViewComponents(){
-        labelHour = UILabel()
-        labelHour.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
-        labelHour.textColor = UIColor.black
+        labelDay = UILabel()
+        labelDay.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        labelDay.textColor = UIColor.black
         
         imageViewWeather = UIImageView()
         imageViewWeather.contentMode = .scaleAspectFit
         imageViewWeather.backgroundColor = UIColor.clear
+        
+        labelDescription = UILabel()
+        labelDescription.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.light)
+        labelDescription.textColor = UIColor.black
+        labelDescription.textAlignment = .right
         
         labelTemperature = UILabel()
         labelTemperature.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
@@ -44,17 +49,12 @@ class HourlyForecastTableViewCell: UITableViewCell {
         labelTemperature.layer.cornerRadius = 8
         labelTemperature.textAlignment = .center
         
-        labelDescription = UILabel()
-        labelDescription.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.light)
-        labelDescription.textColor = UIColor.black
-        labelDescription.textAlignment = .right
-        
         labelDetails = UILabel()
         labelDetails.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
         labelDetails.textColor = UIColor.darkGray
         labelDetails.numberOfLines = 0
         
-        contentView.addSubview(labelHour)
+        contentView.addSubview(labelDay)
         contentView.addSubview(imageViewWeather)
         contentView.addSubview(labelTemperature)
         contentView.addSubview(labelDescription)
@@ -62,10 +62,9 @@ class HourlyForecastTableViewCell: UITableViewCell {
     }
     
     private func _setViewConstraints(){
-        labelHour.translatesAutoresizingMaskIntoConstraints = false
-        labelHour.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        labelHour.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        labelHour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
+        labelDay.translatesAutoresizingMaskIntoConstraints = false
+        labelDay.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        labelDay.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
         
         imageViewWeather.translatesAutoresizingMaskIntoConstraints = false
         imageViewWeather.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90).isActive = true
@@ -74,13 +73,12 @@ class HourlyForecastTableViewCell: UITableViewCell {
         imageViewWeather.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
-        labelDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        labelDescription.centerYAnchor.constraint(equalTo: labelDay.centerYAnchor, constant: 0).isActive = true
         labelDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        labelDescription.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
         
         labelTemperature.translatesAutoresizingMaskIntoConstraints = false
         labelTemperature.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        labelTemperature.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 8).isActive = true
+        labelTemperature.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 45).isActive = true
         labelTemperature.widthAnchor.constraint(equalToConstant: 45).isActive = true
         
         labelDetails.translatesAutoresizingMaskIntoConstraints = false
@@ -89,5 +87,4 @@ class HourlyForecastTableViewCell: UITableViewCell {
         labelDetails.topAnchor.constraint(equalTo: labelTemperature.bottomAnchor, constant: 8).isActive = true
         labelDetails.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
     }
-
 }
