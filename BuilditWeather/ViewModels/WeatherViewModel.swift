@@ -14,17 +14,38 @@ class WeatherViewModel {
     let apiClient = APIClient()
     
     var weather: Weather!
+    var days: [Day] = [Day]()
     
     func forecast(completion:@escaping(_ success:Bool,_ error:String?)->()){
         
-        guard let request = APIClient.apiURL() else {return}
+        guard let request = APIClient.apiURL() else { return }
         
-        APIClient.fetch(request: request) { (result) in
+        APIClient.fetch(request: request) { [unowned self] (result) in
+            
             switch result {
             case .success(let payload, let result):
+                
                 guard let payload = payload else{ return }
                 self.weather = payload
+                
+                var tempDay = ""
+                var currentDay = ""
+                var nextDay = ""
+                for forecast in self.weather.forecast {
+                    
+                    currentDay = forecast.date
+                    nextDay = tempDay
+                    
+                    if currentDay != nextDay {
+                        if self.days.count < 5 {
+                            self.days.append(Day(forecast: forecast))
+                        }
+                        tempDay = currentDay
+                    }
+                }
+
                 completion(result, nil)
+                
             case .failure(let failure):
                 completion(false,failure!)
             }

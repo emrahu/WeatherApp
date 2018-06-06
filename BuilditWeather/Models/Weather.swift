@@ -23,7 +23,6 @@ struct Weather:Decodable {
     }
 }
 
-
 struct ListWeather:Decodable{
     var main:String
     var description:String
@@ -38,8 +37,6 @@ struct ListWeather:Decodable{
         description = try values.decode(String.self, forKey: ListWeather.CodingKeys.description)
         icon = try values.decode(String.self, forKey: ListWeather.CodingKeys.icon)
     }
-
-    
 }
 
 

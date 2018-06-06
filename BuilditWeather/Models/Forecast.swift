@@ -10,6 +10,8 @@ import Foundation
 
 struct Forecast {
     var dateTime:Date
+    var date:String
+    var time:String
     var weather: [ListWeather]
     var temperature:Float
     var tempMin:Float
@@ -22,7 +24,7 @@ struct Forecast {
     
     enum CodingKeys:String, CodingKey {
         case dateTime = "dt_txt"
-        case list,main, weather, wind
+        case time, date, list,main, weather, wind
         
     }
     enum MainKeys:String, CodingKey {
@@ -39,12 +41,32 @@ struct Forecast {
         case windSpeed = "speed"
         case windDegree = "deg"
     }
+    
+//    static func ==(lhs:Forecast, rhs:Forecast) -> Bool{
+//        return lhs.dateTime == rhs.dateTime
+//    }
+//
+//    static func <(lhs:Forecast, rhs:Forecast) -> Bool{
+//        return lhs.dateTime == rhs.dateTime
+//    }
 }
 
 extension Forecast:Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         dateTime = try values.decode(Date.self, forKey: .dateTime)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: dateTime)
+        date = dateString
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "ha"
+        let timeString = timeFormatter.string(from: dateTime)
+        time = timeString
+        
+        
         weather = try values.decode([ListWeather].self, forKey: Forecast.CodingKeys.weather)
         wind = try values.decode(Wind.self, forKey: .wind)
         
@@ -61,7 +83,7 @@ extension Forecast:Decodable {
 extension Forecast:Encodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(dateTime, forKey: .dateTime)
+        try container.encode(date, forKey: .date)
         
         var main = container.nestedContainer(keyedBy: MainKeys.self, forKey: Forecast.CodingKeys.main)
         try main.encode(temperature, forKey: Forecast.MainKeys.temperature)

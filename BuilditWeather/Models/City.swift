@@ -12,5 +12,4 @@ struct City:Codable {
     var name: String
     var coord:Coordinate
     var country:String
-    var population:Int
 }

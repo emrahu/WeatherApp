@@ -47,6 +47,7 @@ class HourlyForecastTableViewCell: UITableViewCell {
         labelDescription = UILabel()
         labelDescription.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.light)
         labelDescription.textColor = UIColor.black
+        labelDescription.textAlignment = .right
         
         labelDetails = UILabel()
         labelDetails.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.light)
@@ -63,15 +64,17 @@ class HourlyForecastTableViewCell: UITableViewCell {
     private func _setViewConstraints(){
         labelHour.translatesAutoresizingMaskIntoConstraints = false
         labelHour.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        labelHour.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
         labelHour.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
         
         imageViewWeather.translatesAutoresizingMaskIntoConstraints = false
         imageViewWeather.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90).isActive = true
-        imageViewWeather.centerYAnchor.constraint(equalTo: labelHour.centerYAnchor, constant: 0).isActive = true
-        imageViewWeather.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        imageViewWeather.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        imageViewWeather.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
+        imageViewWeather.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        imageViewWeather.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
+        labelDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
         labelDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
         labelDescription.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
         

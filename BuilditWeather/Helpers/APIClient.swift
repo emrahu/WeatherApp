@@ -20,9 +20,9 @@ class APIClient {
     struct Constants {
         static let baseUrl = "api.openweathermap.org"
         static let weatherApi = "/data/2.5/forecast"
-        static let city = "Broken Arrow"
+        static let city = "San Francisco"
         static let isoCode = "US"
-        static let units = Units.imperial.rawValue
+        static let units:Units = .imperial
         static let apiKey = "c061e2384cb63a49e9fe98b958012246"
         static let type = "accurate"
         
@@ -41,7 +41,7 @@ class APIClient {
         urlComponents.host = APIClient.Constants.baseUrl
         urlComponents.path = APIClient.Constants.weatherApi
         let cityQuery = URLQueryItem(name: "q", value: "\(APIClient.Constants.city),\(APIClient.Constants.isoCode)")
-        let unitsQuery = URLQueryItem(name: "units", value: APIClient.Constants.units)
+        let unitsQuery = URLQueryItem(name: "units", value: APIClient.Constants.units.rawValue)
         let apiKeyQuery = URLQueryItem(name: "appid", value: APIClient.Constants.apiKey)
         let typeQuery = URLQueryItem(name: "type", value: APIClient.Constants.type)
         urlComponents.queryItems = [cityQuery, unitsQuery, apiKeyQuery, typeQuery]
@@ -81,6 +81,7 @@ class APIClient {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 formatter.locale = Locale(identifier: "en_US_POSIX")
+                formatter.calendar = Calendar(identifier: .iso8601)
                 formatter.timeZone = TimeZone(secondsFromGMT: 0)
                 if let date = formatter.date(from: dateString) {
                     return date
@@ -92,9 +93,6 @@ class APIClient {
                 let weather = try decoder.decode(Weather.self, from: data)
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd"
-                _ = weather.forecast.sorted(by: {
-                    return $0.dateTime.compare($1.dateTime) == .orderedDescending
-                })
                 DispatchQueue.main.async {
                     completion(.success(payload:weather, result:true))
                 }
