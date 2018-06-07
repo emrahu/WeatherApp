@@ -3,6 +3,8 @@
 This is a single view weather app project using Open Weather Map API to display weather forecasts for the provided city. Project includes collection view to display hourly temperature for today. Future forecasts displayed in a table view.
 
 ### Installation
+This project is built using XCode 9.3 and Swift 4.1 Compatible with iOS >= 9.0 
+
 Clone the project ```git clone https://github.com/emrahu/WeatherApp.git``` then open ```WeatherApp.xcodeproj``` in XCode.
 
 No 3rd party library or storyboard is used in this project.

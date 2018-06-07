@@ -154,8 +154,14 @@ class WeatherViewController: UIViewController {
     
     private func _setViewConstraints(){
         scrolView.translatesAutoresizingMaskIntoConstraints = false
-        scrolView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
-        scrolView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        if #available(iOS 11.0, *) {
+            scrolView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
+            scrolView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        } else {
+            scrolView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+            scrolView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        }
+        
         scrolView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         scrolView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
 //        scrolView.bottomAnchor.constraint(equalTo: tableViewFutureDays.bottomAnchor).isActive = true
@@ -208,8 +214,14 @@ class WeatherViewController: UIViewController {
         viewSeparator2.heightAnchor.constraint(equalToConstant:1).isActive = true
         
         tableViewFutureDays.translatesAutoresizingMaskIntoConstraints = false
-        tableViewFutureDays.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
-        tableViewFutureDays.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+        
+        if #available(iOS 11.0, *) {
+            tableViewFutureDays.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
+            tableViewFutureDays.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+        } else {
+            tableViewFutureDays.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+            tableViewFutureDays.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        }
         tableViewFutureDays.topAnchor.constraint(equalTo: viewSeparator2.bottomAnchor, constant: 8).isActive = true
         tableViewFutureDays.bottomAnchor.constraint(equalTo: scrolView.bottomAnchor, constant: 0).isActive = true
         tableViewFutureDays.widthAnchor.constraint(equalTo: scrolView.widthAnchor, constant:0).isActive = true
