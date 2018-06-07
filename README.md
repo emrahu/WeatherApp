@@ -3,7 +3,7 @@
 ### Installation
 This is a demo app. Clone the project then open ```WeatherApp.xcodeproj``` in XCode.
 
-No 3rd party library is used in this project.
+No 3rd party library or storyboard is used in this project.
 
 ### Documentation
 To run it, change signing certificate under application's target section. 
@@ -15,6 +15,13 @@ Command + U to run tests
 This weather app is in active development, I welcome your feedback!
 Here is a way to get in touch:
 * [GitHub Issues](https://github.com/emrahu/WeatherApp/issues) - For generally applicable issues and feedback.
+
+### Improvements
+* Toggle units
+*  Use RxSwift
+* Multiple cities
+* Images can be handled more efficiently
+* Get average temperature for future forecasts
 
 ### Help
 * Find a bug? [Open an issue](https://github.com/emrahu/WeatherApp/issues)

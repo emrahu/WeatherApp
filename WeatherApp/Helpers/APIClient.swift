@@ -20,7 +20,7 @@ class APIClient {
     struct Constants {
         static let baseUrl = "api.openweathermap.org"
         static let weatherApi = "/data/2.5/forecast"
-        static let city = "San Francisco"
+        static let city = "New York"
         static let isoCode = "US"
         static let units:Units = .imperial
         static let apiKey = "c061e2384cb63a49e9fe98b958012246"
