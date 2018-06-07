@@ -131,6 +131,7 @@
 		0C8F3CBC20C5783100709C82 = {
 			isa = PBXGroup;
 			children = (
+				0C134DCB20C8A6E700036DD6 /* README.md */,
 				0C8F3CC720C5783100709C82 /* WeatherApp */,
 				0C134DC220C8970500036DD6 /* ModelsTests */,
 				0C134DE120C8B10E00036DD6 /* WeatherAppTests */,
@@ -157,7 +158,6 @@
 				0C8F3CE820C57C0100709C82 /* Models */,
 				0C7193DD20C80AA9006D686D /* Helpers */,
 				0C8F3CD420C5783200709C82 /* Info.plist */,
-				0C134DCB20C8A6E700036DD6 /* README.md */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
