@@ -34,5 +34,8 @@ Here is a way to get in touch:
 ### Releases
 v1.0.0
 
+![alt tag](https://raw.github.com/emrahu/WeatherApp/master/Assets/Screen+Shot.png)
+
+
 ### License
 This weather app is open source and available under the MIT license. See the [LICENSE](LICENSE) file for more information.
