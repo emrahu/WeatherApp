@@ -1,20 +1,17 @@
 # Weather App
 
+This is a single view weather app project using Open Weather Map API to display weather forecasts for the provided city. Project includes collection view to display hourly temperature for today. Future forecasts displayed in a table view.
+
 ### Installation
-This is a demo app. Clone the project then open ```WeatherApp.xcodeproj``` in XCode.
+Clone the project ```git clone https://github.com/emrahu/WeatherApp.git``` then open ```WeatherApp.xcodeproj``` in XCode.
 
 No 3rd party library or storyboard is used in this project.
 
 ### Documentation
 To run it, change signing certificate under application's target section. 
-Command + R to run
-Command + B to build
-Command + U to run tests
-
-### Feedback
-This weather app is in active development, I welcome your feedback!
-Here is a way to get in touch:
-* [GitHub Issues](https://github.com/emrahu/WeatherApp/issues) - For generally applicable issues and feedback.
+- Command + R to run
+- Command + B to build
+- Command + U to run tests
 
 ### Improvements
 * Toggle units
@@ -22,6 +19,11 @@ Here is a way to get in touch:
 * Multiple cities
 * Images can be handled more efficiently
 * Get average temperature for future forecasts
+
+### Feedback
+This weather app is in active development, I welcome your feedback!
+Here is a way to get in touch:
+* [GitHub Issues](https://github.com/emrahu/WeatherApp/issues) - For generally applicable issues and feedback.
 
 ### Help
 * Find a bug? [Open an issue](https://github.com/emrahu/WeatherApp/issues)
