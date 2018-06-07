@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import BuilditWeather
+@testable import WeatherApp
 
 class ModelsTests: XCTestCase {
     
