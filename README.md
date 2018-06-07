@@ -34,7 +34,7 @@ Here is a way to get in touch:
 ### Releases
 v1.0.0
 
-![alt tag](https://raw.github.com/emrahu/WeatherApp/master/Helpers/screen_shot.png)
+![alt text](https://raw.githubusercontent.com/emrahu/WeatherApp/master/WeatherApp/Helpers/screen_shot.png)
 
 
 ### License
